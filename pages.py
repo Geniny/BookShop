@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk , PhotoImage
 from main import user1 , authenticated , buttonframe , container
+from PIL import ImageTk , Image
 
 class Page(tk.Frame):
     def __init__(self, toolbar , container):
@@ -67,12 +68,19 @@ class UserPage(Page):
         tree.heading("#0", text = "Book")
         tree.heading("A" , text = "Author")
 
-        avatar = PhotoImage(file = "res/ava.gif")
+        image = Image.open("res/ava.gif")
+        avatar = ImageTk.PhotoImage(image)
         back_btn = tk.Button(self.toolbar, text='Back', command=self.init_back, bg='white', bd=1, compound=tk.TOP, width=15)
-        label = tk.Label(self.container, image = avatar)
+        label = tk.Label(self.container,image = avatar )
+        label.image = avatar
+        birth_lbl = tk.Label(self.container , text = "Birthdate: {}".format(user1.birthdate) , font=("Helvetica", 16) , justify = tk.LEFT , anchor = tk.W)
+        user_lbl = tk.Label(self.container , text = "User info" , font=("Helvetica", 16))
+
         back_btn.place(x = 1 , y = 1 , height = 38, width = 100)
         tree.place(x = 780 , y = 1, height = 680 , width = 500)
-        label.place(x = 0 , y = 1 , height = 500 , width = 500)
+        label.place(x = 1 , y = 1 , height = 300 , width = 300)
+        birth_lbl.place(x = 303 , y = 42 , height = 40 , width = 300)
+        user_lbl.place(x = (1280 - 500+300)/2 - 150 , y = 1,height = 40 , width = 300)
 
         Page.__init__(self, self.toolbar, self.container)
 
